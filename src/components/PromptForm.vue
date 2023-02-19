@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Select from './Select.vue';
 import { usePromptStore } from '@/stores/prompt.store';
 import { CUISINE } from '@/constants/location.constants';
 import { PREPARATION_TIME } from '@/constants/time.constants';
@@ -21,30 +22,13 @@ const submit = (e: Event) => {
 <template>
   <form v-on:submit="submit">
     <label for="cuisine" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cuisine</label>
-    <select
-      v-model="cuisine"
-      id="cuisine"
-      :disabled="loading"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    >
-      <option v-for="item in CUISINE" :key="item">
-        {{ item }}
-      </option>
-    </select>
+    <Select :disabled="loading" v-model="cuisine" id="cuisine" :options="CUISINE" />
 
     <label for="preparation-time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-8">
       Preparation time
     </label>
-    <select
-      :disabled="loading"
-      v-model="preparationTime"
-      id="preparation-time"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    >
-      <option v-for="item in PREPARATION_TIME" :key="item">
-        {{ item }}
-      </option>
-    </select>
+    <Select :disabled="loading" v-model="preparationTime" id="preparation-time" :options="PREPARATION_TIME" />
+
     <label class="relative inline-flex items-center cursor-pointer mt-8">
       <input :disabled="loading" type="checkbox" v-model="vegetarian" class="sr-only peer" />
       <div
@@ -52,6 +36,7 @@ const submit = (e: Event) => {
       ></div>
       <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Vegetarian</span>
     </label>
+
     <button
       type="submit"
       :disabled="loading"
