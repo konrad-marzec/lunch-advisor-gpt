@@ -10,11 +10,13 @@ export const useRecipeStore = defineStore('recipe', () => {
   const loading = ref(false);
   const hasError = ref(false);
 
-  async function loadRecipe(cuisine: string, prepTime: string) {
+  async function loadRecipe(cuisine: string, prepTime: string, vegetarian: boolean) {
     loading.value = true;
     hasError.value = false;
 
-    const prompt = `Give me an random idea and recipe for dinner. I would like to eat ${cuisine} cuisine. Preparation time should be around ${prepTime}. Please return markdown format`;
+    const prompt = `Give me an random idea and recipe for ${
+      vegetarian ? 'vegetarian' : ''
+    } dinner. I would like to eat ${cuisine} cuisine. Preparation time should be around ${prepTime}. Please return markdown format.`;
 
     try {
       const response = await (
